@@ -1,0 +1,41 @@
+name: Find coupon codes
+
+on:
+  workflow_dispatch:
+    inputs:
+      store:
+        description: 'Store name (e.g., Free People Movement)'
+        required: true
+        type: string
+      country:
+        description: 'Country code (optional, e.g., US)'
+        required: false
+        type: string
+  schedule:
+    - cron: '0 6 * * *'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm install
+
+      - name: Run scraper
+        run: node fetch-coupons.js "${{ github.event.inputs.store }}" "${{ github.event.inputs.country }}"
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add codes.json
+          git commit -m "Update codes.json for ${{ github.event.inputs.store }}" || echo "No changes"
+          git push
