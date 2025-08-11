@@ -1,0 +1,11 @@
+{
+  "name": "coupon-scout-scraper",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "scripts": {
+    "scrape": "node scripts/fetch-coupons.js"
+  }
+}

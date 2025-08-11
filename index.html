@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coupon Scout — GitHub-Only</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>🧭 Coupon Scout</h1>
+    <p class="tagline">GitHub Pages front end + GitHub Actions scraper. No external services.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="field-row">
+        <label for="store">Store / Site</label>
+        <input id="store" type="text" placeholder="e.g., Adidas US" />
+      </div>
+      <div class="field-row">
+        <label for="country">Country (optional)</label>
+        <input id="country" type="text" placeholder="e.g., US, UK, CA" />
+      </div>
+      <div class="actions">
+        <button id="show-codes">Show Latest Codes</button>
+        <button id="how" class="secondary">How to refresh</button>
+      </div>
+      <p class="hint">This page reads from <code>codes.json</code> in this repo. To refresh results, run the GitHub Action (below).</p>
+    </section>
+
+    <section class="card" id="codes-card" hidden>
+      <h2>Found Codes</h2>
+      <div id="codes"></div>
+      <p class="hint" id="updated"></p>
+    </section>
+
+    <section class="card" id="help" hidden>
+      <h2>Refresh the codes</h2>
+      <ol>
+        <li>Go to your repo → <strong>Actions</strong> tab.</li>
+        <li>Choose <strong>Find coupon codes</strong> workflow.</li>
+        <li>Click <strong>Run workflow</strong>, enter the Store and Country, and run.</li>
+        <li>Wait ~1–2 minutes, then refresh this page.</li>
+      </ol>
+      <p class="hint">You can also schedule this to run nightly (already set).</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Best-effort: parses public pages. Always verify at checkout.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
