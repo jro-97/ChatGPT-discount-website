@@ -12,13 +12,17 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '0 6 * * *'  # daily at 06:00 UTC (optional)
+
+# 👇 This is the key bit you were missing
+permissions:
+  contents: write
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -26,10 +30,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm install
 
       - name: Run scraper
+        # fetch-coupons.js is in the repo root based on your screenshot
         run: node fetch-coupons.js "${{ github.event.inputs.store }}" "${{ github.event.inputs.country }}"
 
       - name: Commit results
